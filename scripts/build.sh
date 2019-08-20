@@ -1,5 +1,6 @@
 #!/bin/bash
 set -eu -o pipefail
+[ -n "${FORCE_COLOR:-}" ] || FORCE_COLOR=false
 for arg in "$@"; do case $arg in
         -d|--debug) DEBUG=true; shift ;;
         -c|--color) FORCE_COLOR=true; shift;;
