@@ -1,5 +1,10 @@
 #!/bin/bash
 set -eu -o pipefail
+for arg in "$@"; do case $arg in
+        -d|--debug) DEBUG=true; shift ;;
+        -c|--color) FORCE_COLOR=true; shift;;
+#        *) OTHER_ARGUMENTS+=("$1"); shift;;
+esac done
 [[ "${DEBUG:-false}" =~ ^yes|true$ ]] && set -x
 
 # Import functions if not already imported
@@ -30,6 +35,8 @@ build_and_publish_artifacts() {
 
 [ -n "${VERSION:-}" ] || VERSION=$(get_version)
 [ -n "${GIT_BRANCH:-}" ] || GIT_BRANCH=$(find_remote_branch)
+
+fatal "Force color: ${FORCE_COLOR:-no}"
 
 if is_pull_request; then
     log "Pull request detected: Running a 'build and test' job without publishing artifacts..."

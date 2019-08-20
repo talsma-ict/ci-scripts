@@ -8,7 +8,7 @@ SCRIPTNAME=$(basename ${0%.*})
 
 # Set colors if supported by the terminal and output is not redirected somewhere else
 bold="";underline="";standout="";normal="";black="";red="";green="";yellow="";blue="";magenta="";cyan="";white=""
-if [[ -t 1 ]]; then
+if [[ "${FORCE_COLOR:-false}" =~ ^yes|true$ || -t 1 ]]; then
     ncolors=$(tput colors)
 #    if [[ -n "$ncolors" && $ncolors -ge 8 ]]; then
         bold="$(tput bold)";underline="$(tput smul)";standout="$(tput smso)";normal="$(tput sgr0)"
@@ -41,5 +41,3 @@ fatal() {
     log "${1:-}" "${2:-ERROR}"
     exit 1
 }
-
-log "Hello there"
