@@ -36,8 +36,6 @@ build_and_publish_artifacts() {
 [ -n "${VERSION:-}" ] || VERSION=$(get_version)
 [ -n "${GIT_BRANCH:-}" ] || GIT_BRANCH=$(find_remote_branch)
 
-fatal "Force color: ${FORCE_COLOR:-no}"
-
 if is_pull_request; then
     log "Pull request detected: Running a 'build and test' job without publishing artifacts..."
     build_and_test
