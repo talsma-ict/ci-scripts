@@ -5,10 +5,11 @@
 #
 
 SCRIPTNAME=$(basename ${0%.*})
+[ -n "${USE_COLOR:-}" ] || if [[ -t 1 ]]; then USE_COLOR=true; else USE_COLOR=false; fi
 
 # Set colors if supported by the terminal and output is not redirected somewhere else
 bold="";underline="";standout="";normal="";black="";red="";green="";yellow="";blue="";magenta="";cyan="";white=""
-if [[ "${FORCE_COLOR:-false}" =~ ^yes|true$ || -t 1 ]]; then
+if [[ "${USE_COLOR:-false}" =~ ^yes|true$ ]]; then
     ncolors=$(tput colors)
     if [[ -n "$ncolors" && $ncolors -ge 8 ]]; then
         bold="$(tput bold)";underline="$(tput smul)";standout="$(tput smso)";normal="$(tput sgr0)"
@@ -19,14 +20,13 @@ if [[ "${FORCE_COLOR:-false}" =~ ^yes|true$ || -t 1 ]]; then
 fi
 
 log() {
-    local level="${2:-INFO}"
     local color="${normal}"
-    case ${level} in
+    case "${2:-INFO}" in
       INFO) local color="${normal}${green}";;
       WARNING) local color="${normal}${magenta}";;
       ERROR) local color="${normal}${bold}${red}";;
     esac
-    [ "${level}" = "DEBUG" ] || echo "${color}[${level}] ${SCRIPTNAME}${color}: ${1:-}${normal}" 1>&2
+    [ "${2:-}" = "DEBUG" ] || echo "${color}[${2:-INFO}] ${SCRIPTNAME}${color}: ${1:-}${normal}" 1>&2
 }
 
 debug() {

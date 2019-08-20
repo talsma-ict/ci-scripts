@@ -1,10 +1,6 @@
 #!/bin/bash
 set -eu -o pipefail
-for arg in "$@"; do case $arg in
-        -d|--debug) DEBUG=true; shift ;;
-        -c|--color) FORCE_COLOR=true; shift;;
-#        *) OTHER_ARGUMENTS+=("$1"); shift;;
-esac done
+source "$(dirname $0)/options.sh"
 [[ "${DEBUG:-false}" =~ ^yes|true$ ]] && set -x
 
 declare -f debug > /dev/null || source "$(dirname $0)/logging.sh"
