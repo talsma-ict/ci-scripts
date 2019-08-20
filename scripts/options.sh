@@ -8,7 +8,7 @@
 for arg in "$@"; do case $arg in
     -d|--debug) DEBUG=true; shift;;
     -d=*|--debug=*) DEBUG="${arg#*=}"; shift;;
-    -c|--color) USE_COLOR=true; shift;;
-    -c=*|--color=*) USE_COLOR="${arg#*=}"; shift;;
+    -c|--color|--colour) USE_COLOR=true; shift;;
+    -c=*|--color=*|--colour=*) USE_COLOR="${arg#*=}"; shift;;
 #    *) OTHER_ARGUMENTS+=("$1"); shift;;
 esac done
